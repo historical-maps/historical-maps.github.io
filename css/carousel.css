@@ -99,8 +99,12 @@ body {
   margin-right: 20px;
 }
 
-h3.author {
+.author h3 {
   margin-top: 10px;
+}
+
+.author p {
+  padding-left: 120px;
 }
 
 

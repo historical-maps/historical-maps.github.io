@@ -27,7 +27,7 @@
           <div class="container">
             <div class="carousel-caption">
               <h1>Extracting metadata from historical maps.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p>Manually collecting metadata from ancient maps is a tedious task. However, there is much interesting information in such maps. We do research on algorithms that allow computers to do the work.</p>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <div class="container">
             <div class="carousel-caption">
               <h1>Assigning place markers and labels.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p>One important step in understanding the contents of historical maps is to be able to identify which label belongs to which place marker in the map.</p>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
           <div class="container">
             <div class="carousel-caption">
               <h1>Pointing users to difficult situations.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p>However, algorithms won't be able to solve this problem completely without human interaction. Therefore, we ask the user for help &ndash; but only for unclear situations.</p>
             </div>
           </div>
         </div>
@@ -71,42 +71,119 @@
           <h2 class="featurette-heading">What's this?</h2>
           <p class="lead">In our research, we invented a tool that assigns place markers to labels on old maps. What is that good for? Well, as you can see above, historical maps often contain a surprising amount of labeled places. This is interesting content one can extract from the map.</p> 
           <p class="lead">Now supposing you know the positions of these elements in the map, our tool can figure out how they belong together &ndash; and do so very quickly.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Show me the details</a></p>
+          <p><a class="btn btn-lg btn-primary" href="#steps" role="button">Show me the details</a></p>
         </div>
         <div class="col-md-4">
           <img class="featurette-image img-responsive img-rounded" src="img/assignments.jpg" alt="Generic placeholder image">
         </div>
       </div>
 
-      <hr class="featurette-divider">
+      <hr id="steps" class="featurette-divider">
 
       <div class="row">
         <div class="col-lg-4">
           <img class="img-circle" src="img/circle1.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
           <h2>Getting Input</h2>
           <p>As an input, our tool requires a bounding box for each place marker and each label in the map. This information can be acquired using image processing, OCR or by manually drawing boxes.</p>
+          <p><a class="btn btn-default" href="#input" role="button">More about input &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <img class="img-circle" src="img/circle2.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
           <h2>Matching</h2>
           <p>Using a minimum cost matching approach, our tool assigns pairs of markers and labels based on their distance on the map and the surrounding elements. This only takes a couple of seconds on most maps.</p>
+          <p><a class="btn btn-default" href="#matching" role="button">More about matching &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <img class="img-circle" src="img/circle3.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
           <h2>Sensitivity Analysis</h2>
           <p>Some situations in the maps are quite unclear, even to humans without domain knowledge. In this last step, our algorithm identifies such situations and presents them to the user for verification.</p>
+          <p><a class="btn btn-default" href="#sensitivity" role="button">More about sensitivity &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
+
+      <hr id="input" class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="img/labelsmarkers.jpg" alt="Generic placeholder image">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Getting input. <span class="text-muted">Work in progress.</span></h2>
+          <p class="lead">At the moment, our tool requires bounding boxes of each place marker and label in the map as an input. By bounding boxes, we mean rectangles drawn around those features in the map.</p>
+          <p class="lead">For testing and evaluation, this input can be made by hand (although it took us quite a while, even for a few maps only). For productive use in, say, a library, this manual process is not acceptable. For this reason, we are working right now on tools that identify place markers as well as text in historical maps automatically.</p>
+
+        </div>
+      </div>
+
+      <hr id="matching" class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">What goes where? <span class="text-muted">Matching labels and markers.</span></h2>
+          <p class="lead">We have developed an algorithm that assigns pairs of markers and labels in the map. Its decisions are based on the distance between these elements. However, it does not simply always assign the elements nearest to each other. Instead, it is based on the concept of minimum cost matchings and optimizes a global objective function.</p>
+          <p class="lead">With this approach, we are able to calculate assignments with very low error rates &ndash; even in really difficult situations like in the figure on the right.</p>
+          <p class="lead">Our algorithm runs in polynomial time; in practice it only takes a couple of seconds to find an assignment, even if the map contains thousands of markers and labels.</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive img-rounded" src="img/matching.jpg" alt="A difficult matching">
+        </div>
+      </div>
+      
+      <hr id="sensitivity" class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive img-rounded" src="img/sensitivity.jpg" alt="Sensitivity analysis">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Sensitivity analysis. <span class="text-muted">Show difficult spots.</span></h2>
+          <p class="lead">Although the matching algorithm has a very low error rate, there remain <i>some</i> incorrect and unclear situations. Of course, we only want to show those few, interesting situations to the user (and not thousands of clear situations).</p>
+          <p class="lead">For that reason, we have developed a classifier that ranks the computed assignments by the confidence our algorithm has in them. These confidence values are based on the concept of sensitivity analysis (and can be visualized in different colors, for instance).</p>
+          <p class="lead">This allows us to only show a small fraction of all assignments to the user, but still to be sure we get user verification where needed.</p>
+        </div>
+      </div>
 
       <hr class="featurette-divider">
 
       <div class="row featurette">
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-        <div class="col-md-7">
-          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <div class="col-md-12">
+          <h2 class="featurette-heading">More information. <span class="text-muted">And finally, some code.</span></h2>
+          <div class="row">
+          
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="img/paper.jpg" alt="Paper">
+                <div class="caption">
+                  <h3>Paper</h3>
+                  <p>We wrote a paper about the stuff described in this website and it got accepted at <a href="http://mapinteract.org/">MapInteract 2014</a>. The paper contains all the details, experimental results and some more figures.</p>
+                  <p><a href="#" class="btn btn-primary" role="button">Download</a> <a href="#" class="btn btn-default" role="button">Website</a></p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="img/presentation.jpg" alt="Presentation">
+                <div class="caption">
+                  <h3>Presentation</h3>
+                  <p>At the <a href="http://mapinteract.org/">MapInteract 2014</a> workshop, Benedikt also gave a presentation on this project and the contents of the paper. Feel free to download and browse through the slides.</p>
+                  <p><a href="http://www1.informatik.uni-wuerzburg.de/fileadmin/10030100/_temp_/MapInteract14.pdf" class="btn btn-primary" role="button">Download</a> <a href="http://www1.informatik.uni-wuerzburg.de/mitarbeiterinnen/budig_benedikt/" class="btn btn-default" role="button">Website</a></p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="img/plugin.jpg" alt="QGIS plugin">
+                <div class="caption">
+                  <h3>QGIS plugin</h3>
+                  <p>As a proof of concept regarding the user interface, we have developed a plugin for <a href="http://qgis.org/">QGIS</a>, which is available as open source on GitHub. Try it out yourself or fork it!</p>
+                  <p><a href="https://github.com/Uni-Wue-Efficient-Algorithms/historical-sensitivity-plugin" class="btn btn-primary" role="button">Show project on GitHub</a></p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
         </div>
       </div>
 
@@ -115,19 +192,26 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">Contact the authors</h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          <p class="lead">Feel free to share your thoughts, ideas and complaints and contact the authors at any time. If you do something similar, go ahead and say hi, we are certainly interested in your project. You find contact information on our websites (see boxes on the right).</p>
+          <img class="pull-left" style="width: 140px; margin-right: 20px" src="img/uni.jpg" alt="University of Würzburg">
+          <p class="lead">This project was developed at the <a href="http://www1.informatik.uni-wuerzburg.de/">Chair for Computer Science I</a>, University of Würzburg, Germany.</p>
+          <div class='clearfix'></div>
+          <h3>Acknowledgements</h3>
+          <p class="lead">We'd like to thank the <a href="http://www.bibliothek.uni-wuerzburg.de/">University Library in Würzburg</a> for the beautiful historical maps for this project!</p>
         </div>
         <div class="col-md-5">
-           <div class="well">
+           <div class="well author">
              <img class="img-circle pull-left img-portrait" src="img/benedikt.jpg" alt="Generic placeholder image" style="width: 100px; height: 100px;">
-             <h3 class="author">Benedikt Budig, M.Sc.</h3>
-             <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p>
+             <h3>Benedikt Budig, M.Sc.</h3>
+             <p>is a research assistant and PhD student at the University of Würzburg. His interests are metadata extraction from historical maps as well as algorithms for GIS in general.</p>
+             <p><a href="http://www1.informatik.uni-wuerzburg.de/mitarbeiterinnen/budig_benedikt/" class="btn btn-default" role="button">Visit Benedikt's website</a></p>
            </div>
            
-           <div class="well">
+           <div class="well author">
              <img class="img-circle pull-left img-portrait" src="img/thomas.jpg" alt="Generic placeholder image" style="width: 100px; height: 100px;">
-             <h3 class="author">Dr. Thomas van Dijk</h3>
-             <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p>
+             <h3>Dr. Thomas van Dijk</h3>
+             <p>is a postdoc at the University of Würzburg. He is interested in algorithms for GIS, linear programming and algorithmic systems with user interaction.</p>
+             <p><a href="http://www1.informatik.uni-wuerzburg.de/mitarbeiterinnen/dijk_thomas_van/" class="btn btn-default" role="button">Visit Thomas' website</a></p>
            </div>
         </div>
       </div>
@@ -140,7 +224,7 @@
       <!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p>&copy; 2014 TODO &middot; <a href="https://github.com/Uni-Wue-Efficient-Algorithms/historical-sensitivity-plugin">GitHub</a> &middot; <a href="#">TODO</a></p>
       </footer>
 
     </div><!-- /.container -->
